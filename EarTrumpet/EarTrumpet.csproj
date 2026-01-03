@@ -146,6 +146,7 @@
     <Compile Include="Addons\EarTrumpet.Actions\ViewModel\Triggers\HotkeyTriggerViewModel.cs" />
     <Compile Include="Addons\EarTrumpet.Actions\ViewModel\Triggers\ProcessTriggerViewModel.cs" />
     <Compile Include="Addons\EarTrumpet.Actions\ViewModel\VolumeViewModel.cs" />
+    <Compile Include="AudioScreenRouter\ScreenListener.cs" />
     <Compile Include="DataModel\AppInformation\AppInformationFactory.cs" />
     <Compile Include="DataModel\AppInformation\IAppInfo.cs" />
     <Compile Include="DataModel\AppInformation\Internal\DesktopAppInfo.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="UI\Themes\ThemeBindingInfo.cs" />
     <Compile Include="UI\Helpers\TaskbarIconSource.cs" />
     <Compile Include="UI\ViewModels\BackstackViewModel.cs" />
+    <Compile Include="UI\ViewModels\EarTrumpetScreenAudioRouterPageViewModel.cs" />
     <Compile Include="UI\ViewModels\EarTrumpetCommunitySettingsPageViewModel.cs" />
     <Compile Include="UI\ViewModels\EarTrumpetMouseSettingsPageViewModel.cs" />
     <Compile Include="UI\ViewModels\EarTrumpetShortcutsPageViewModel.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="UI\ViewModels\IFlyoutViewModel.cs" />
     <Compile Include="UI\ViewModels\IPopupHostViewModel.cs" />
     <Compile Include="UI\ViewModels\ISettingsViewModel.cs" />
+    <Compile Include="UI\ViewModels\ScreenAudioDeviceViewModel.cs" />
     <Compile Include="UI\ViewModels\SettingsAppItemViewModel.cs" />
     <Compile Include="UI\ViewModels\SettingsPageHeaderViewModel.cs" />
     <Compile Include="UI\ViewModels\SettingsPageViewModel.cs" />
@@ -329,6 +332,9 @@
     <Compile Include="UI\ViewModels\WelcomeViewModel.cs" />
     <Compile Include="UI\Views\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Views\ScreenAudioDeviceView.xaml.cs">
+      <DependentUpon>ScreenAudioDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -407,6 +413,9 @@
     </Page>
     <Page Include="UI\Views\DialogWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Views\ScreenAudioDeviceView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Views\SettingsWindow.xaml">

@@ -659,4 +659,10 @@
   <data name="SettingsUseGlobalMouseWheelHook" xml:space="preserve">
     <value>浮出面板打开时，使用滚轮调节音量</value>
   </data>
+  <data name="ScreenAudioRouterText" xml:space="preserve">
+    <value>屏幕音频路由</value>
+  </data>
+  <data name="EnableScreenAudioRoutingText" xml:space="preserve">
+    <value>启用自动音频路由(通过窗口屏幕位置自动切换音频设备)</value>
+  </data>
 </root>

@@ -2041,6 +2041,9 @@
             <DataTemplate DataType="{x:Type vm:TemporaryAppItemViewModel}">
                 <views:AppItemView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ScreenAudioDeviceMapViewModel}">
+                <views:ScreenAudioDeviceView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:SettingsAppItemViewModel}">
                 <Grid Margin="6">
                     <Grid.ColumnDefinitions>

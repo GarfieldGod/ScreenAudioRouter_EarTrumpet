@@ -30,8 +30,10 @@ namespace EarTrumpet.UI.Behaviors
         {
             var comboBoxItem = (ComboBoxItem)sender;
             var comboBox = comboBoxItem.FindVisualParent<ComboBox>();
-            var item = (SettingsSearchItemViewModel)comboBoxItem.DataContext;
-            InvokeSearchItem(item, comboBox);
+            if (comboBoxItem.DataContext is SettingsSearchItemViewModel settingsSearchItem)
+            {
+                InvokeSearchItem(settingsSearchItem, comboBox);
+            }
         }
 
         // Alternate to ItemsSource that hooks up other event handlers, and also implemenets replacement text search.

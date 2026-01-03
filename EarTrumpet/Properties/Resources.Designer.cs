@@ -628,6 +628,16 @@ namespace EarTrumpet.Properties {
                 return ResourceManager.GetString("EditText", resourceCulture);
             }
         }
+
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Audio Routing Automatic by Screen.
+        /// </summary>
+        public static string EnableScreenAudioRoutingText {
+            get {
+                return ResourceManager.GetString("EnableScreenAudioRoutingText", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to EarTrumpet Actions XML.
@@ -1220,6 +1230,15 @@ namespace EarTrumpet.Properties {
         public static string RequiredText {
             get {
                 return ResourceManager.GetString("RequiredText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ScreenAudioRouter.
+        /// </summary>
+        public static string ScreenAudioRouterText {
+            get {
+                return ResourceManager.GetString("ScreenAudioRouterText", resourceCulture);
             }
         }
         

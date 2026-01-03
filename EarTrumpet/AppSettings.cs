@@ -1,6 +1,8 @@
 ﻿using EarTrumpet.DataModel.Storage;
 using EarTrumpet.Interop.Helpers;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using static EarTrumpet.Interop.User32;
@@ -10,6 +12,7 @@ namespace EarTrumpet
     public class AppSettings
     {
         public event EventHandler<bool> UseLegacyIconChanged;
+        public event EventHandler<bool> EnableScreenAudioRoutingChanged;
         public event Action FlyoutHotkeyTyped;
         public event Action MixerHotkeyTyped;
         public event Action SettingsHotkeyTyped;
@@ -108,6 +111,49 @@ namespace EarTrumpet
                 HotkeyManager.Current.Unregister(AbsoluteVolumeDownHotkey);
                 _settings.Set("AbsoluteVolumeDownHotkey", value);
                 HotkeyManager.Current.Register(AbsoluteVolumeDownHotkey);
+            }
+        }
+
+        public bool EnableScreenAudioRouting
+        {
+            get
+            {
+                var ret = _settings.Get("EnableScreenAudioRouting", "False");
+                bool.TryParse(ret, out bool enableScreenAudioRouting);
+                return enableScreenAudioRouting;
+            }
+            set
+            {
+                _settings.Set("EnableScreenAudioRouting", value.ToString());
+                EnableScreenAudioRoutingChanged?.Invoke(null, EnableScreenAudioRouting);
+            }
+        }
+
+        public Dictionary<string, string> ScreenAudioDeviceMap
+        {
+            get
+            {
+                var ret = _settings.Get("ScreenAudioDeviceMap", "{}");
+                try
+                {
+                    var screenAudioDeviceMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(ret);
+                    return screenAudioDeviceMap ?? new Dictionary<string, string>();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return new Dictionary<string, string>();
+                }
+            }
+            set
+            {
+                if (value == null)
+                {
+                    value = new Dictionary<string, string>();
+                }
+
+                var jsonStr = JsonConvert.SerializeObject(value);
+                _settings.Set("ScreenAudioDeviceMap", jsonStr);
             }
         }
 

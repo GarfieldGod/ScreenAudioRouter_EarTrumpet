@@ -178,6 +178,14 @@
                           IsChecked="{Binding UseLogarithmicVolume, Mode=TwoWay}" />
             </StackPanel>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EarTrumpetScreenAudioRouterPageViewModel}">
+            <StackPanel Orientation="Vertical">
+                <CheckBox HorizontalAlignment="Left"
+                          Content="{x:Static resx:Resources.EnableScreenAudioRoutingText}"
+                          IsChecked="{Binding EnableScreenAudioRouting, Mode=TwoWay}" />
+                <ContentControl Content="{Binding ScreenAudioDeviceView}" />
+            </StackPanel>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:EarTrumpetLegacySettingsPageViewModel}">
             <StackPanel Orientation="Vertical">
                 <CheckBox HorizontalAlignment="Left"

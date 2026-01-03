@@ -5,6 +5,7 @@ using EarTrumpet.Extensibility.Hosting;
 using EarTrumpet.Extensions;
 using EarTrumpet.Interop;
 using EarTrumpet.Interop.Helpers;
+using EarTrumpet.ScreenRouter;
 using EarTrumpet.UI.Helpers;
 using EarTrumpet.UI.ViewModels;
 using EarTrumpet.UI.Views;
@@ -39,6 +40,7 @@ namespace EarTrumpet
         private WindowHolder _mixerWindow;
         private WindowHolder _settingsWindow;
         private ErrorReporter _errorReporter;
+        private ScreenListener _screenListener;
 
         public static AppSettings Settings { get; private set; }
 
@@ -80,6 +82,7 @@ namespace EarTrumpet
             ((UI.Themes.Manager)Resources["ThemeManager"]).Load();
 
             var deviceManager = WindowsAudioFactory.Create(AudioDeviceKind.Playback);
+            _screenListener = new ScreenListener(deviceManager, Settings);
             deviceManager.Loaded += (_, __) => CompleteStartup();
             CollectionViewModel = new DeviceCollectionViewModel(deviceManager, Settings);
 
@@ -119,6 +122,8 @@ namespace EarTrumpet
             _trayIcon.IsVisible = true;
 
             DisplayFirstRunExperience();
+
+            if (Settings.EnableScreenAudioRouting) _screenListener.Start();
         }
 
         private void trayIconScrolled(object _, int wheelDelta)
@@ -247,6 +252,7 @@ namespace EarTrumpet
                         new EarTrumpetShortcutsPageViewModel(Settings),
                         new EarTrumpetMouseSettingsPageViewModel(Settings),
                         new EarTrumpetCommunitySettingsPageViewModel(Settings),
+                        new EarTrumpetScreenAudioRouterPageViewModel(Settings),
                         new EarTrumpetLegacySettingsPageViewModel(Settings),
                         new EarTrumpetAboutPageViewModel(() => _errorReporter.DisplayDiagnosticData(), Settings)
                     });

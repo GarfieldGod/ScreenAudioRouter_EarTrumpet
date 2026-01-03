@@ -24,9 +24,16 @@ namespace EarTrumpet.Interop.Helpers
         }
 
         public delegate int MouseWheelHandler(object sender, MouseEventArgs e);
+        public delegate void MouseLeftButtonDownHandler(object sender, MouseEventArgs e);
+        public delegate void MouseLeftButtonUpHandler(object sender, MouseEventArgs e);
+
         public event MouseWheelHandler MouseWheelEvent;
+        public event MouseLeftButtonDownHandler MouseLeftButtonDown;
+        public event MouseLeftButtonUpHandler MouseLeftButtonUp;
 
         private const int WM_MOUSEWHEEL = 0x020A;
+        private const int WM_LBUTTONDOWN = 0x0201;
+        private const int WM_LBUTTONUP = 0x0202;
         private const int WH_MOUSE_LL = 14;
         private User32.HookProc _hProc;
         private int _hHook;
@@ -53,17 +60,33 @@ namespace EarTrumpet.Interop.Helpers
 
         private int MouseHookProc(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode < 0 || MouseWheelEvent == null || (Int32)wParam != WM_MOUSEWHEEL)
+            if (nCode < 0)
             {
                 return User32.CallNextHookEx(_hHook, nCode, wParam, lParam);
             }
             MouseLLHookStruct MyMouseHookStruct = (MouseLLHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseLLHookStruct));
-            int result = MouseWheelEvent(this, new MouseEventArgs(MouseButtons.None, 0, MyMouseHookStruct.pt.x, MyMouseHookStruct.pt.y, MyMouseHookStruct.mouseData >> 16));
-            if (result == 0)
+            MouseEventArgs mouseArgs = new MouseEventArgs(MouseButtons.Left, 1, MyMouseHookStruct.pt.x, MyMouseHookStruct.pt.y, MyMouseHookStruct.mouseData >> 16);
+
+            if ((int)wParam == WM_LBUTTONDOWN && MouseLeftButtonDown != null)
             {
-                return User32.CallNextHookEx(_hHook, nCode, wParam, lParam);
+                MouseLeftButtonDown(this, mouseArgs);
             }
-            return result;
+
+            if ((int)wParam == WM_LBUTTONUP && MouseLeftButtonUp != null)
+            {
+                MouseLeftButtonUp(this, mouseArgs);
+            }
+
+            if ((int)wParam == WM_MOUSEWHEEL && MouseWheelEvent != null)
+            {
+                int result = MouseWheelEvent(this, mouseArgs);
+                if (result != 0)
+                {
+                    return result;
+                }
+            }
+
+            return User32.CallNextHookEx(_hHook, nCode, wParam, lParam);
         }
     }
 }
